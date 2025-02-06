@@ -1,0 +1,8 @@
+#content {
+    background-color: rgb(5, 5, 5) ;
+    color: white;
+}
+
+.sidebar-dark {
+    background-image: linear-gradient(black, red);
+}
