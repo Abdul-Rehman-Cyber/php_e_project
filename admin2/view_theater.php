@@ -65,42 +65,44 @@ include("../admin/connection.php");
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <div class="d-flex justify-content-between"> 
-                                <h5>Theaters</h5> 
-                                <a href="add_theater.php" class="btn btn-outline-primary" href><i class="fa fa-plus me-2"></i>Add Theater</a>
-                            </div>
-                           
+                            <h6 class="mb-4">Responsive Table</h6>
                             <div class="table-responsive">
                                 <table class="table">
-                                    <thead>
-                                        <tr>
-                                        <th scope="col">Id</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">City</th>
-                                        <th scope="col">Address</th>
-                                        <th scope="col">Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    $query = "select * from theaters";
-                                    $result = mysqli_query($connect, $query);
-                                    foreach ($result as $row) {
+                                <?php
+                $query = "select * from theaters where theater_id=$_GET[id]";
+                $result = mysqli_query($connect, $query);
+                foreach ($result as $row) {
 
-                                        echo "<tr>
-                                                <td>$row[theater_id]</td>
-                                                <td>$row[theater_name]</td>
-                                                <td>$row[city]</td>
-                                                <td>$row[address]</td>
-                                                <td>
-                                                    <a class='btn btn-outline-primary' href='view_theater.php?id=$row[theater_id]'>view details </a>
-                                                    <a class='btn btn-outline-primary' href='update_theater.php?id=$row[theater_id]'>Update </a>
-                                                    <a class='btn btn-outline-primary' href='delete_theater.php?id=$row[theater_id]'>delete </a>";
-                                                "</td>
-                                            </tr>";
-                                    }
-                                    ?>
-                                    </tbody>
+                    
+                    echo "
+        <tr>
+            <th scope='col'>Id</th>
+            <td>{$row['theater_id']}</td>
+        </tr>
+        <tr>
+            <th scope='col'>Name</th>
+            <td>{$row['theater_name']}</td>
+        </tr>
+        <tr>
+            <th scope='col'>city</th>
+            <td>{$row['city']}</td>
+        </tr>
+        <tr>
+            <th scope='col'>address</th>
+            <td>{$row['address']}</td>
+        </tr>
+        <tr>
+            <th scope='col'>capacity</th>
+            <td>{$row['capacity']}</td>
+        </tr>
+        <tr>
+            <th scope='col'>available_seat_classes</th>
+            <td>{$row['available_seat_classes']}</td>
+        </tr>";
+
+                    
+                }
+                ?>
                                 </table>
                             </div>
                         </div>

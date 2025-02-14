@@ -67,7 +67,7 @@ include("../admin/connection.php");
                         <div class="bg-secondary rounded h-100 p-4">
                             <div class="d-flex justify-content-between"> 
                                 <h5>Movies</h5> 
-                                <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-plus me-2"></i>Add Movie</button>
+                                <a href="add_movie.php" class="btn btn-outline-primary m-2"><i class="fa fa-plus me-2"></i>Add Movie</a>
                             </div>
                            
                             <div class="table-responsive">
