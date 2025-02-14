@@ -66,42 +66,40 @@ include("../admin/connection.php");
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4">
                             <div class="d-flex justify-content-between"> 
-                                <h5>Movies</h5> 
-                                <button type="button" class="btn btn-outline-primary m-2"><i class="fa fa-plus me-2"></i>Add Movie</button>
+                                <h5>Theaters</h5> 
+                                <button type="button" class="btn btn-outline-primary"><i class="fa fa-plus me-2"></i>Add Theater</button>
                             </div>
                            
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Id</th>
-                                            <th scope="col">Title</th>
-                                            <th scope="col">Rating</th>
-                                            <th scope="col">Age rating</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Action</th>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">City</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        $query = "select * from movies";
-                                        $result = mysqli_query($connect, $query);
-                                        foreach ($result as $row) {
+                                    <?php
+                                    $query = "select * from theaters";
+                                    $result = mysqli_query($connect, $query);
+                                    foreach ($result as $row) {
 
-                                            echo "<tr>
-                                                    <td>$row[movie_id]</td>
-                                                    <td>$row[title]</td>
-                                                    <td>$row[rating]</td>
-                                                    <td>$row[age_rating]</td>
-                                                    <td>$row[movie_status]</td>
-                                                    <td>
-                                                    <a class='btn btn-light' href='view_movie.php?id=$row[movie_id]'>view details </a>
-                                                    <a class='btn btn-light' href='update_movie.php?id=$row[movie_id]'>Update </a>
-                                                    <a class='btn btn-danger' href='delete_movie.php?id=$row[movie_id]'>delete </a>
-                                                    </td>
-                                                </tr>";
-                                        }
-                                        ?>
+                                        echo "<tr>
+                                                <td>$row[theater_id]</td>
+                                                <td>$row[theater_name]</td>
+                                                <td>$row[city]</td>
+                                                <td>$row[address]</td>
+                                                <td>
+                                                    <a class='btn btn-outline-primary' href='view_theater.php?id=$row[theater_id]'>view details </a>
+                                                    <a class='btn btn-outline-primary' href='update_theater.php?id=$row[theater_id]'>Update </a>
+                                                    <a class='btn btn-outline-primary' href='delete_theater.php?id=$row[theater_id]'>delete </a>";
+                                                "</td>
+                                            </tr>";
+                                    }
+                                    ?>
                                     </tbody>
                                 </table>
                             </div>

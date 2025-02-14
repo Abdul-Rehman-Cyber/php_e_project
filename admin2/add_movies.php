@@ -11,11 +11,6 @@ include("../admin/connection.php");
 //     </script>";
 // }
 
-$query = "select * from movies where movie_id=$_GET[id]";
-$result = mysqli_query($connect, $query);
-$row = mysqli_fetch_assoc($result);
-
-
 
 ?>
 <!DOCTYPE html>
@@ -87,25 +82,17 @@ $row = mysqli_fetch_assoc($result);
                                 <div class="row mb-3">
                                     <label for="formFile" class="col-sm-2 col-form-label">Movie Poster</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control bg-dark" type="file" id="formFile" name="poster_url"
-                                        value="<?php echo $row['poster_url']; ?>">
-                                    </div>
-                                    
-                                </div>
-                                <div class="row mb-3">
-                                    <label for="formFile" class="col-sm-2 col-form-label"></label>
-                                    <div class="col-sm-10">
-                                        <img class="mt-3" src="<?php echo $row['poster_url']; ?>" alt="" style="width: 200px; height: auto;">          
+                                        <input class="form-control bg-dark" type="file" id="formFile" name="poster_url">
                                     </div>
                                 </div>
+                                
                                 <!-- movie poster input -->
 
                                 <!-- movie title input -->
                                 <div class="row mb-3">
                                     <label for="title" class="col-sm-2 col-form-label">Movie Title</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="title" name="title"
-                                            value="<?php echo $row['title']; ?>" required>
+                                        <input type="text" class="form-control" id="title" name="title" required>
                                     </div>
                                 </div>
                                 <!-- movie title input -->
@@ -114,8 +101,7 @@ $row = mysqli_fetch_assoc($result);
                                 <div class="row mb-3">
                                     <label for="description" class="col-sm-2 col-form-label">Description</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="description" name="title"
-                                            value="<?php echo $row['description']; ?>" required>
+                                        <input type="text" class="form-control" id="description" name="title" required>
                                     </div>
                                 </div>
                                 <!-- movie description input -->
@@ -125,8 +111,7 @@ $row = mysqli_fetch_assoc($result);
                                 <div class="row mb-3">
                                     <label for="trailer_link" class="col-sm-2 col-form-label">Trailer_Code</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="trailer_link" name="title"
-                                            value="<?php echo $row['trailer_link']; ?>" required>
+                                        <input type="text" class="form-control" id="trailer_link" name="title" required>
                                     </div>
                                 </div>
                                 <!-- movie Trailer_Code input -->
@@ -136,8 +121,7 @@ $row = mysqli_fetch_assoc($result);
                                 <div class="row mb-3">
                                     <label for="rating" class="col-sm-2 col-form-label">Rating</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="rating" name="rating"
-                                            value="<?php echo $row['rating']; ?>" required>
+                                        <input type="text" class="form-control" id="rating" name="rating" required>
                                     </div>
                                 </div>
                                 <!-- movie Rating input -->
@@ -147,8 +131,7 @@ $row = mysqli_fetch_assoc($result);
                                 <div class="row mb-3">
                                     <label for="release_date" class="col-sm-2 col-form-label">Release_date</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="release_date" name="release_date"
-                                            value="<?php echo $row['release_date']; ?>" required>
+                                        <input type="text" class="form-control" id="release_date" name="release_date" required>
                                     </div>
                                 </div>
                                 <!-- movie Release_date input -->
@@ -158,13 +141,12 @@ $row = mysqli_fetch_assoc($result);
                                 <div class="row mb-3">
                                     <label for="release_date" class="col-sm-2 col-form-label">Age_Rating</label>
                                     <div class="col-sm-10">
-                                        <select class="form-select mb-3">
+                                        <select class="form-select mb-3" required>
                                             <option selected hidden>Age_rating</option>
-                                            <option value="G" <?php echo ($row['age_rating'] == 'G' ? 'selected' : ''); ?>>
-                                                G (General Audiences)</option>
-                                            <option value="PG" <?php echo ($row['age_rating'] == 'PG' ? 'selected' : ''); ?>>PG (Parental Guidance Suggested)</option>
-                                            <option value="PG-13" <?php echo ($row['age_rating'] == 'PG-13' ? 'selected' : ''); ?>>PG-13 (Parents Strongly Cautioned)</option>
-                                            <option value="R" <?php echo ($row['age_rating'] == 'R' ? 'selected' : ''); ?>>R (Restricted)</option>
+                                            <option value="G">G (General Audiences)</option>
+                                            <option value="PG">PG (Parental Guidance Suggested)</option>
+                                            <option value="PG-13">PG-13 (Parents Strongly Cautioned)</option>
+                                            <option value="R">R (Restricted)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -175,10 +157,8 @@ $row = mysqli_fetch_assoc($result);
                                     <label for="release_date" class="col-sm-2 col-form-label">Movie Status</label>
                                     <div class="col-sm-10">
                                         <select class="form-select mb-3" aria-label="Default select example">
-                                            <option value="Released" <?php echo ($row['movie_status'] == 'Released' ? 'selected' : ''); ?>>Released
-                                            </option>
-                                            <option value="Comming_Soon" <?php echo ($row['movie_status'] == 'Comming_Soon' ? 'selected' : ''); ?>>
-                                                Comming Soon</option>
+                                            <option value="Released">Released</option>
+                                            <option value="Comming_Soon">Comming Soon</option>
                                         </select>
                                     </div>
                                 </div>
@@ -189,21 +169,13 @@ $row = mysqli_fetch_assoc($result);
                                     <div class="col-sm-10">
                                         <div class="bg-secondary rounded h-100">
                                             <?php
-                                                // Check if the genre field exists and is not empty.
-                                                if (isset($row['genre']) && !empty($row['genre'])) {
-                                                    // Explode the comma-separated string and trim each element to remove extra spaces.
-                                                    $selectedGenres = array_map('trim', explode(',', $row['genre']));
-                                                } else {
-                                                    $selectedGenres = [];
-                                                }
-
                                                 // List of available genres
                                                 $genres = [
                                                     "Action",
                                                     "Thriller",
                                                     "Romance",
                                                     "Horror",
-                                                    "Sci-fi",
+                                                    "Science-fiction",
                                                     "Comedy",
                                                     "Animation",
                                                     "Fiction",
@@ -215,10 +187,10 @@ $row = mysqli_fetch_assoc($result);
                                                 // Generate checkboxes dynamically
                                                 foreach ($genres as $genre) {
                                                     // Check if the current genre is in the selected genres array
-                                                    $isChecked = in_array($genre, $selectedGenres) ? 'checked' : '';
+                                                    
                                                     echo '
                                                     <div class="form-check form-check-inline">
-                                                        <input type="checkbox" class="form-check-input" id="' . $genre . '" name="genre[]" value="' . $genre . '" ' . $isChecked . '> 
+                                                        <input type="checkbox" class="form-check-input" id="' . $genre . '" name="genre[]" value="' . $genre . '"> 
                                                         <label class="form-check-label" for="' . $genre . '">'.$genre.'</label>
                                                     </div>';
                                                 }
@@ -232,10 +204,10 @@ $row = mysqli_fetch_assoc($result);
 
                                 <!-- movie Update button -->
                                 <div class="row mb-3">
-                                    <label for="release_date" class="col-sm-2 col-form-label">Update Button</label>
+                                    <label for="release_date" class="col-sm-2 col-form-label">Add Button</label>
                                     <div class="col-sm-10">
-                                        <button type="submit" name="update"
-                                            class="btn btn-outline-primary w-100 mb-3">Update</button>
+                                        <button type="submit" name="add"
+                                            class="btn btn-outline-primary w-100 mb-3">Add Movie</button>
                                     </div>
                                 </div>
                                 <!-- movie Update button -->
@@ -253,9 +225,9 @@ $row = mysqli_fetch_assoc($result);
 </script>
 
 <?php
-if (isset($_POST['update'])) {
 
-    $movie_id = mysqli_real_escape_string($connect, $_GET['id']);
+if (isset($_POST['add'])) {
+    // Escape special characters for text fields
     $title = mysqli_real_escape_string($connect, $_POST['title']);
     $description = mysqli_real_escape_string($connect, $_POST['description']);
     $trailer_link = mysqli_real_escape_string($connect, $_POST['trailer_link']);
@@ -264,63 +236,41 @@ if (isset($_POST['update'])) {
     $age_rating = mysqli_real_escape_string($connect, $_POST['age']);
     $status = mysqli_real_escape_string($connect, $_POST['status']);
 
-    // Handle poster upload
-    if (isset($_FILES['poster_url']) && $_FILES['poster_url']['error'] === UPLOAD_ERR_OK) {
-        // A new file was uploaded
-        $poster_url = $_FILES['poster_url']['name'];
-        $tmpname = $_FILES['poster_url']['tmp_name'];
-        $path = "img/movie_posters/$poster_url";
-        move_uploaded_file($tmpname, $path);
-    } else {
-        // No new file uploaded; retrieve the previous image from the database
-        $query = "SELECT poster_url FROM movies WHERE movie_id = '$movie_id'";
-        $resultImage = mysqli_query($connect, $query);
-        if ($resultImage && mysqli_num_rows($resultImage) > 0) {
-            $row = mysqli_fetch_assoc($resultImage);
-            $path = $row['poster_url'];
-        } else {
-            $path = ''; // Optionally handle the case where no previous image exists
-        }
-    }
-
-
-
-    // Handle genres
+    // Ensure at least one genre is selected
     if (!isset($_POST['genre']) || empty($_POST['genre'])) {
         echo "<script>alert('Please select at least one genre.');</script>";
         exit;
     }
-    // Handle genre (convert array to a comma-separated string)
     $genre = implode(", ", $_POST['genre']);
     $genre = mysqli_real_escape_string($connect, $genre);
+    
+    // Process the file upload
+    $raw_file_name = $_FILES['poster_url']['name'];
+    $poster_name = basename($raw_file_name);
+    // Optionally, remove characters like apostrophes
+    $poster_name = str_replace("'", "", $poster_name);
+    $tmpname = $_FILES['poster_url']['tmp_name'];
+    $path = "img/movie_posters/" . $poster_name;
 
-    // Update query
-    $update_query = "UPDATE movies SET 
-        title = '$title', 
-        description = '$description', 
-        trailer_link = '$trailer_link', 
-        rating = '$rating', 
-        poster_url = '$path', 
-        release_date = '$release_date', 
-        age_rating = '$age_rating', 
-        genre = '$genre' ,
-        movie_status = '$status'
-        WHERE movie_id = '$movie_id'";
+    if (!move_uploaded_file($tmpname, $path)) {
+        die("File upload failed.");
+    }
 
-    $result = mysqli_query($connect, $update_query);
+    // Insert Query
+    $insert_query = "INSERT INTO movies (title, description, trailer_link, rating, poster_url, release_date, age_rating, genre, movie_status) 
+    VALUES ('$title', '$description', '$trailer_link', '$rating', '$path', '$release_date', '$age_rating', '$genre', '$status')";
+
+    $result = mysqli_query($connect, $insert_query);
 
     if ($result) {
         echo "<script>
-            alert('Update successful');
-            window.location.href='movies.php';
+            alert('New movie added successfully');
+            window.location.href = 'movies.php';
         </script>";
     } else {
-        echo "<script>
-            alert('Update failed: " . mysqli_error($connect) . "');
-        </script>";
+        die("Error: " . mysqli_error($connect));
     }
 }
-
 ?>
                         </div>
                     </div>
