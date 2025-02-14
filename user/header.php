@@ -18,19 +18,23 @@
 						<ul class="header__nav">
 
 							<li class="header__nav-item">
-								<a href="index.php" class="header__nav-link <?= ($currentPage == 'index.php') ? ' header__nav-link--active' : '' ?>">Home</a>
+								<a href="index.php"
+									class="header__nav-link <?= ($currentPage == 'index.php') ? ' header__nav-link--active' : '' ?>">Home</a>
 							</li>
 
 							<li class="header__nav-item">
-								<a href="movies.php" class="header__nav-link <?= ($currentPage == 'movies.php') ? ' header__nav-link--active' : '' ?>">Movies</a>
+								<a href="movies.php"
+									class="header__nav-link <?= ($currentPage == 'movies.php') ? ' header__nav-link--active' : '' ?>">Movies</a>
 							</li>
 
 							<li class="header__nav-item">
-								<a href="pricing.php" class="header__nav-link <?= ($currentPage == 'pricing.php') ? ' header__nav-link--active' : '' ?>">Pricing Plan</a>
+								<a href="booking.php"
+									class="header__nav-link <?= ($currentPage == 'booking.php') ? ' header__nav-link--active' : '' ?>">Booking</a>
 							</li>
 
 							<li class="header__nav-item">
-								<a href="faq.php" class="header__nav-link <?= ($currentPage == 'faq.php') ? ' header__nav-link--active' : '' ?>">Help</a>
+								<a href="faq.php"
+									class="header__nav-link <?= ($currentPage == 'faq.php') ? ' header__nav-link--active' : '' ?>">Help</a>
 							</li>
 
 							<!-- dropdown -->
@@ -41,8 +45,11 @@
 
 								<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
 									<li><a href="about.php">About</a></li>
-									<li><a href="signin.php">Sign In</a></li>
-									<li><a href="signup.php">Sign Up</a></li>
+									<li>
+										<a href="<?php echo isset($_SESSION['user_session']) ? 'profile.php' : 'signin.php'; ?>">Profile</a>
+									</li>
+
+
 								</ul>
 							</li>
 							<!-- end dropdown -->
@@ -50,12 +57,26 @@
 						<!-- end header nav -->
 
 						<!-- header auth -->
-						<div class="header__auth">
 
-							<a href="signin.php" class="header__sign-in">
-								<i class="icon ion-ios-log-in"></i>
+						<div class="header__auth">
+							<?php
+							if (isset($_SESSION['user_session'])) {
+								echo "
+								<a href='logout.php' class='header__sign-in'>
+								<i class='icon ion-ios-log-in'></i>
+								<span>Logout</span>
+								</a>
+								";
+							} else {
+								echo "
+								<a href='signin.php' class='header__sign-in'>
+								<i class='icon ion-ios-log-in'></i>
 								<span>sign in</span>
-							</a>
+								</a>
+								";
+							}
+
+							?>
 						</div>
 						<!-- end header auth -->
 

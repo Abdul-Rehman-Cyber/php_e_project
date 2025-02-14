@@ -111,6 +111,7 @@ if(!isset($_SESSION['admin_session'])){
                             <th scope="col">Title</th>
                             <th scope="col">Rating</th>
                             <th scope="col">Age rating</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -126,6 +127,7 @@ if(!isset($_SESSION['admin_session'])){
                             <td>$row[title]</td>
                             <td>$row[rating]</td>
                             <td>$row[age_rating]</td>
+                            <td>$row[movie_status]</td>
                             <td>
                             <a class='btn btn-light' href='view_movie.php?id=$row[movie_id]'>view details </a>
                             <a class='btn btn-light' href='update_movie.php?id=$row[movie_id]'>Update </a>

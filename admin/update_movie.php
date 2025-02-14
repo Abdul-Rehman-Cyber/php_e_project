@@ -29,23 +29,23 @@ $row = mysqli_fetch_assoc($result);
     <form method="post" enctype="multipart/form-data">
 
         <div class="form-group">
-            <label class="form-label">Poster_url</label>
-            <input type="file" class="form-control" name="poster_url" required>
+            <label class="form-label">Movie_Poster</label>
+            <input type="file" class="form-control" name="poster_url" value="<?php echo $row['poster_url']; ?>">
 
-            <img src="<?php echo $row['poster_url']; ?>" alt="">
+            <img class="mt-3" src="<?php echo $row['poster_url']; ?>" alt="" width="300px" height="auto">
         </div>
 
         <div class="form-group">
-            <label class="form-label">title</label>
+            <label class="form-label">Title</label>
             <input type="text" class="form-control" name="title" value="<?php echo $row['title']; ?>" required>
         </div>
         <div class="form-group">
-            <label class="form-label">description</label>
+            <label class="form-label">Description</label>
             <input type="text" class="form-control" name="description" value="<?php echo $row['description']; ?>"
                 required>
         </div>
         <div class="mb-3">
-            <label class="form-label">Trailer_link</label>
+            <label class="form-label">Trailer_Code</label>
             <input type="text" class="form-control" name="trailer_link" value="<?php echo $row['trailer_link']; ?>"
                 required>
         </div>
@@ -72,22 +72,53 @@ $row = mysqli_fetch_assoc($result);
                 <option value="R" <?php echo ($row['age_rating'] == 'R' ? 'selected' : ''); ?>>R (Restricted)</option>
             </select>
         </div>
+        <div class="form-group">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-control">
+                <option value="Released" <?php echo ($row['movie_status'] == 'Released' ? 'selected' : ''); ?>>Released
+                </option>
+                <option value="Comming_Soon" <?php echo ($row['movie_status'] == 'Comming_Soon' ? 'selected' : ''); ?>>
+                    Comming Soon</option>
+            </select>
+        </div>
 
         <div class="form-group">
             <label class="form-label">Genre (Select at least one)</label><br>
-            <input type="checkbox" name="genre[]" value="Action"> Action<br>
-            <input type="checkbox" name="genre[]" value="Thriller"> Thriller<br>
-            <input type="checkbox" name="genre[]" value="Romance"> Romance<br>
-            <input type="checkbox" name="genre[]" value="Horror"> Horror<br>
-            <input type="checkbox" name="genre[]" value="Science-fiction"> Science fiction<br>
-            <input type="checkbox" name="genre[]" value="Comedy"> Comedy<br>
-            <input type="checkbox" name="genre[]" value="Animation"> Animation<br>
-            <input type="checkbox" name="genre[]" value="Fiction"> Fiction<br>
-            <input type="checkbox" name="genre[]" value="Mystery"> Mystery<br>
-            <input type="checkbox" name="genre[]" value="Western"> Western<br>
-            <input type="checkbox" name="genre[]" value="Adventure"> Adventure<br>
-            <p id="genre-error" style="color:red; display:none;">Please select at least one genre.</p>
+            <?php
+            // Check if the genre field exists and is not empty.
+            if (isset($row['genre']) && !empty($row['genre'])) {
+                // Explode the comma-separated string and trim each element to remove extra spaces.
+                $selectedGenres = array_map('trim', explode(',', $row['genre']));
+            } else {
+                $selectedGenres = [];
+            }
+
+            // List of available genres
+            $genres = [
+                "Action",
+                "Thriller",
+                "Romance",
+                "Horror",
+                "Science-fiction",
+                "Comedy",
+                "Animation",
+                "Fiction",
+                "Mystery",
+                "Western",
+                "Adventure"
+            ];
+
+            // Generate checkboxes dynamically
+            foreach ($genres as $genre) {
+                // Check if the current genre is in the selected genres array
+                $isChecked = in_array($genre, $selectedGenres) ? 'checked' : '';
+                echo '<input type="checkbox" name="genre[]" value="' . $genre . '" ' . $isChecked . '> ' . $genre . '<br>';
+            }
+            ?>
         </div>
+
+
+
 
         <button type="submit" name="update" class="btn btn-primary">Update</button>
     </form>
@@ -106,23 +137,35 @@ $row = mysqli_fetch_assoc($result);
 <?php
 if (isset($_POST['update'])) {
 
+    $movie_id = mysqli_real_escape_string($connect, $_GET['id']);
     $title = mysqli_real_escape_string($connect, $_POST['title']);
     $description = mysqli_real_escape_string($connect, $_POST['description']);
     $trailer_link = mysqli_real_escape_string($connect, $_POST['trailer_link']);
     $rating = mysqli_real_escape_string($connect, $_POST['rating']);
     $release_date = mysqli_real_escape_string($connect, $_POST['release_date']);
     $age_rating = mysqli_real_escape_string($connect, $_POST['age']);
-    $movie_id = mysqli_real_escape_string($connect, $_GET['id']);
-    
+    $status = mysqli_real_escape_string($connect, $_POST['status']);
+
     // Handle poster upload
-    if (!empty($_FILES['poster_url']['name'])) {
+    if (isset($_FILES['poster_url']) && $_FILES['poster_url']['error'] === UPLOAD_ERR_OK) {
+        // A new file was uploaded
         $poster_url = $_FILES['poster_url']['name'];
         $tmpname = $_FILES['poster_url']['tmp_name'];
         $path = "img/movie_posters/$poster_url";
         move_uploaded_file($tmpname, $path);
     } else {
-        $path = $row['poster_url']; // Keep existing image if no new upload
+        // No new file uploaded; retrieve the previous image from the database
+        $query = "SELECT poster_url FROM movies WHERE movie_id = '$movie_id'";
+        $resultImage = mysqli_query($connect, $query);
+        if ($resultImage && mysqli_num_rows($resultImage) > 0) {
+            $row = mysqli_fetch_assoc($resultImage);
+            $path = $row['poster_url'];
+        } else {
+            $path = ''; // Optionally handle the case where no previous image exists
+        }
     }
+
+
 
     // Handle genres
     if (!isset($_POST['genre']) || empty($_POST['genre'])) {
@@ -142,7 +185,8 @@ if (isset($_POST['update'])) {
         poster_url = '$path', 
         release_date = '$release_date', 
         age_rating = '$age_rating', 
-        genre = '$genre' 
+        genre = '$genre' ,
+        movie_status = '$status'
         WHERE movie_id = '$movie_id'";
 
     $result = mysqli_query($connect, $update_query);

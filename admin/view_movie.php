@@ -107,10 +107,11 @@ if (!isset($_SESSION['admin_session'])) {
                 $result = mysqli_query($connect, $query);
                 foreach ($result as $row) {
 
-                    
+
                     echo "
         <tr>
-            <img src='{$row['poster_url']}' alt='{$row['title']}'>
+            <th scope='col'>Movie Poster</th>
+            <td><img src='{$row['poster_url']}' alt='{$row['title']}' width='300px' height='auto'></td>
         </tr>
         <tr>
             <th scope='col'>Id</th>
@@ -141,6 +142,10 @@ if (!isset($_SESSION['admin_session'])) {
             <td>{$row['genre']}</td>
         </tr>
         <tr>
+            <th scope='col'>Status</th>
+            <td>{$row['movie_status']}</td>
+        </tr>
+        <tr>
             <th scope='col'>Trailer_link</th>
             <td>
                 <iframe width='560' height='315' src='https://www.youtube.com/embed/{$row['trailer_link']}?v=sbyHK0otP6Y' 
@@ -150,7 +155,7 @@ if (!isset($_SESSION['admin_session'])) {
             </td>
         </tr>";
 
-                    
+
                 }
                 ?>
             </table>

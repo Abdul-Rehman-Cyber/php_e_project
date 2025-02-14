@@ -32,7 +32,7 @@
         <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -48,14 +48,13 @@
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-            <!-- Nav Item - Dashboard -->
+
             <li class="nav-item active">
                 <a class="nav-link" href="theaters.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Theaters</span></a>
             </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="movies.php">
                     <i class="fas fa-fw fa-folder"></i>
@@ -64,7 +63,6 @@
 
             </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="user.php">
                     <i class="fas fa-fw fa-folder"></i>
@@ -73,14 +71,18 @@
 
             </li>
 
-            <!-- Nav Item - Charts -->
             <li class="nav-item">
                 <a class="nav-link" href="admin.php">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>Admin</span></a>
             </li>
 
-            <!-- Nav Item - Tables -->
+            <li class="nav-item">
+                <a class="nav-link" href="../user/index.php" target="_blank">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Website</span></a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="logout.php">
                     <i class="fas fa-fw fa-table"></i>

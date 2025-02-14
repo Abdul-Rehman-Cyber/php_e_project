@@ -1,3 +1,4 @@
+<?php include "../admin/connection.php"?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- Font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CUbuntu:300,400,500,700" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CUbuntu:300,400,500,700" rel="stylesheet">
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="css/bootstrap-reboot.min.css">
@@ -33,6 +34,7 @@
 	<title>FlixGo – Online Movies, TV Shows & Cinema HTML Template</title>
 
 </head>
+
 <body class="body">
 
 	<div class="sign section--bg" data-bg="img/section/section.jpg">
@@ -41,27 +43,45 @@
 				<div class="col-12">
 					<div class="sign__content">
 						<!-- registration form -->
-						<form action="#" class="sign__form">
+						<form method="POST" class="sign__form">
 							<a href="index.php" class="sign__logo">
 								<img src="img/logo.svg" alt="">
 							</a>
 
 							<div class="sign__group">
-								<input type="text" class="sign__input" placeholder="Name">
+								<input type="text" class="sign__input" placeholder="Name" name="name">
 							</div>
 
 							<div class="sign__group">
-								<input type="text" class="sign__input" placeholder="Email">
+								<input type="text" class="sign__input" placeholder="Email" name="email">
 							</div>
 
 							<div class="sign__group">
-								<input type="password" class="sign__input" placeholder="Password">
+								<input type="password" class="sign__input" placeholder="Password" name="pass">
 							</div>
-							
-							<button class="sign__btn" type="button">Sign up</button>
+
+							<button class="sign__btn" type="submit" name="sign_up_btn">Sign up</button>
 
 							<span class="sign__text">Already have an account? <a href="signin.php">Sign in!</a></span>
 						</form>
+						<?php
+						if (isset($_POST["sign_up_btn"])) {
+							$name = $_POST['name'];
+							$email = $_POST['email'];
+							$pass = $_POST['pass'];
+							$insert_query = "INSERT INTO user_table (user_name, user_email, user_pass) 
+    						VALUES ('$name', '$email', '$pass')";
+							$result = mysqli_query($connect ,$insert_query);
+							if ($result) {
+								echo "<script>
+									alert('Registerd successfully');
+									window.location.href = 'signin.php';
+								</script>";
+							} else {
+								die("Error: " . mysqli_error($connect));
+							}
+						}
+						?>
 						<!-- registration form -->
 					</div>
 				</div>

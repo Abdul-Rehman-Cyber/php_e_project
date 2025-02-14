@@ -28,7 +28,7 @@ if (!isset($_SESSION['admin_session'])) {
             <input type="text" class="form-control" name="description" required>
         </div>
         <div class="form-group">
-            <label class="form-label">Trailer Link</label>
+            <label class="form-label">Trailer Code</label>
             <input type="text" class="form-control" name="trailer_link" required>
         </div>
         <div class="form-group">
@@ -36,7 +36,7 @@ if (!isset($_SESSION['admin_session'])) {
             <input type="text" class="form-control" name="rating" required>
         </div>
         <div class="form-group">
-            <label class="form-label">Poster URL</label>
+            <label class="form-label">Movie_Poster</label>
             <input type="file" class="form-control" name="poster_url" required>
         </div>
         <div class="form-group">
@@ -50,6 +50,13 @@ if (!isset($_SESSION['admin_session'])) {
                 <option value="PG">PG (Parental Guidance Suggested)</option>
                 <option value="PG-13">PG-13 (Parents Strongly Cautioned)</option>
                 <option value="R">R (Restricted)</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Status</label>
+            <select name="status" class="form-control" required>
+                <option value="Released">Released</option>
+                <option value="Comming_Soon">Comming Soon</option>
             </select>
         </div>
 
@@ -85,32 +92,40 @@ if (!isset($_SESSION['admin_session'])) {
 </script>
 
 <?php
+
 if (isset($_POST['add'])) {
-    // Escape special characters
+    // Escape special characters for text fields
     $title = mysqli_real_escape_string($connect, $_POST['title']);
     $description = mysqli_real_escape_string($connect, $_POST['description']);
     $trailer_link = mysqli_real_escape_string($connect, $_POST['trailer_link']);
     $rating = mysqli_real_escape_string($connect, $_POST['rating']);
-    $poster_url = $_FILES['poster_url']['name'];
-    $tmpname = $_FILES['poster_url']['tmp_name'];
-    $path = "img/movie_posters/$poster_url";
-    move_uploaded_file($tmpname, $path);
     $release_date = mysqli_real_escape_string($connect, $_POST['release_date']);
     $age_rating = mysqli_real_escape_string($connect, $_POST['age']);
+    $status = mysqli_real_escape_string($connect, $_POST['status']);
 
-    // Backend Validation: Ensure at least one genre is selected
+    // Ensure at least one genre is selected
     if (!isset($_POST['genre']) || empty($_POST['genre'])) {
         echo "<script>alert('Please select at least one genre.');</script>";
         exit;
     }
-
-    // Handle genre (convert array to a comma-separated string)
     $genre = implode(", ", $_POST['genre']);
     $genre = mysqli_real_escape_string($connect, $genre);
+    
+    // Process the file upload
+    $raw_file_name = $_FILES['poster_url']['name'];
+    $poster_name = basename($raw_file_name);
+    // Optionally, remove characters like apostrophes
+    $poster_name = str_replace("'", "", $poster_name);
+    $tmpname = $_FILES['poster_url']['tmp_name'];
+    $path = "img/movie_posters/" . $poster_name;
+
+    if (!move_uploaded_file($tmpname, $path)) {
+        die("File upload failed.");
+    }
 
     // Insert Query
-    $insert_query = "INSERT INTO movies (title, description, trailer_link, rating, poster_url, release_date, age_rating, genre) 
-    VALUES ('$title', '$description', '$trailer_link', '$rating', '$path', '$release_date', '$age_rating', '$genre')";
+    $insert_query = "INSERT INTO movies (title, description, trailer_link, rating, poster_url, release_date, age_rating, genre, movie_status) 
+    VALUES ('$title', '$description', '$trailer_link', '$rating', '$path', '$release_date', '$age_rating', '$genre', '$status')";
 
     $result = mysqli_query($connect, $insert_query);
 

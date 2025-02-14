@@ -1,3 +1,8 @@
+<?php 
+session_start();
+include "../admin/connection.php" 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +11,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- Font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CUbuntu:300,400,500,700" rel="stylesheet"> 
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600%7CUbuntu:300,400,500,700" rel="stylesheet">
 
 	<!-- CSS -->
 	<link rel="stylesheet" href="css/bootstrap-reboot.min.css">
@@ -33,6 +38,7 @@
 	<title>FlixGo – Online Movies, TV Shows & Cinema HTML Template</title>
 
 </head>
+
 <body class="body">
 
 	<div class="sign section--bg" data-bg="img/section/section.jpg">
@@ -41,30 +47,49 @@
 				<div class="col-12">
 					<div class="sign__content">
 						<!-- authorization form -->
-						<form action="#" class="sign__form">
+						<form method="POST" class="sign__form">
 							<a href="index.php" class="sign__logo">
 								<img src="img/logo.svg" alt="">
 							</a>
 
 							<div class="sign__group">
-								<input type="text" class="sign__input" placeholder="Email">
+								<input type="email" class="sign__input" placeholder="Email" name="email">
 							</div>
 
 							<div class="sign__group">
-								<input type="password" class="sign__input" placeholder="Password">
+								<input type="password" class="sign__input" placeholder="Password" name="pass">
 							</div>
 
 							<div class="sign__group sign__group--checkbox">
 								<input id="remember" name="remember" type="checkbox" checked="checked">
 								<label for="remember">Remember Me</label>
 							</div>
-							
-							<button class="sign__btn" type="button">Sign in</button>
+
+							<button class="sign__btn" type="submit" name="sign_in_btn">Sign in</button>
 
 							<span class="sign__text">Don't have an account? <a href="signup.php">Sign up!</a></span>
 
 							<span class="sign__text"><a href="#">Forgot password?</a></span>
 						</form>
+						<?php
+						if (isset($_POST["sign_in_btn"])) {
+							$email = $_POST['email'];
+							$pass = $_POST['pass'];
+							$query = "select * from user_table where user_email = '$email' and user_pass = '$pass'";
+							$result = mysqli_query($connect, $query);
+							if (mysqli_num_rows($result) > 0) {
+								$row = mysqli_fetch_array($result);
+								$_SESSION["user_session"] = $row["user_id"];
+								echo
+									"<script>alert('Login Successfull');
+                                    		window.location.href='index.php';
+                                    </script>";
+							} else {
+								echo
+									"<script>alert('Login Fail')</script>";
+							}
+						}
+						?>
 						<!-- end authorization form -->
 					</div>
 				</div>
