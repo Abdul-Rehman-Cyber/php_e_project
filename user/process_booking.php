@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $total_cost = $adult_cost + $kid_cost;
 
     // Optional: Retrieve the logged in user id from session if available
-    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : NULL;
+    $user_id = isset($_SESSION['user_session']) ? $_SESSION['user_session'] : NULL;
 
     // Insert booking record into the bookings table
     $stmt = $connect->prepare("INSERT INTO bookings (user_id, theater_id, movie_id, show_date, show_time, seating_category, adult_tickets, kid_tickets, total_cost) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -112,11 +112,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
         <!-- pricing -->
-        <div class="section">
-            <div class="container">
-                <div class="row">
+        <div class="section  d-flex">
+            <div class="container ">
+                <div class="row ">
                     <!-- price -->
-                    <div class="col-12 col-md-6 col-lg-4">
+                    <div class="col-5">
                         <div class="price">
                             <div class="price__item price__item--first"><span>Booking Confirmation</span></div>
                             <div class="price__item"><span><strong>Booking ID:</strong> <?php echo $booking_id; ?></span>
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <?php echo number_format($pricing[$seating_category] * 0.5); ?> =
                                     <?php echo number_format($kid_cost); ?></span></div>
                             <hr>
-                            <div class="price__item"><span><strong>Total Cost:</strong>
+                            <div class="price__item"><span><stron>Total Cost:</strong>
                                     <?php echo number_format($total_cost); ?></span></div>
                             <a href="booking.php" class="price__btn">Book Another Ticket</a>
                         </div>
@@ -145,42 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
         <!-- end pricing -->
 
-        <!-- features -->
-        <section class="section section--dark">
-            <div class="container">
-                <div class="row">
-                    <!-- section title -->
-                    <div class="col-12">
-                        <h2 class="section__title section__title--no-margin">Our Features</h2>
-                    </div>
-                    <!-- end section title -->
-
-                    <!-- feature -->
-                    <div class="col-12 col-md-6 col-lg-4">
-                        <div class="feature">
-                            <i class="icon ion-ios-tv feature__icon"></i>
-                            <h3 class="feature__title">Booking Confirmation</h3>
-                            <p><strong>Booking ID:</strong> <?php echo $booking_id; ?></p>
-                            <p><strong>Show Date:</strong> <?php echo htmlspecialchars($show_date); ?></p>
-                            <p><strong>Show Time:</strong> <?php echo htmlspecialchars($show_time); ?></p>
-                            <p><strong>Seating Category:</strong> <?php echo htmlspecialchars($seating_category); ?></p>
-                            <p><strong>Adult Tickets:</strong> <?php echo $adult_tickets; ?> x
-                                $<?php echo number_format($pricing[$seating_category], 2); ?> =
-                                $<?php echo number_format($adult_cost, 2); ?></p>
-                            <p><strong>Kid Tickets:</strong> <?php echo $kid_tickets; ?> x
-                                $<?php echo number_format($pricing[$seating_category] * 0.5, 2); ?> =
-                                $<?php echo number_format($kid_cost, 2); ?></p>
-                            <hr>
-                            <p><strong>Total Cost:</strong> $<?php echo number_format($total_cost); ?></p>
-                            <a href="booking.php" class="btn btn-primary">Book Another Ticket</a>
-                            <p class="feature__text"></p>
-                        </div>
-                    </div>
-                    <!-- end feature -->
-                </div>
-            </div>
-        </section>
-
+        
         <?php include "footer.php"; ?>
         <script src="js/jquery-3.3.1.min.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>

@@ -32,13 +32,11 @@ $row = mysqli_fetch_assoc($result);
         </div>
         <div class="form-group">
             <label class="form-label">Email</label>
-            <input type="text" class="form-control" name="admin_email" value="<?php echo $row['admin_email']; ?>"
-                required>
+            <input type="text" class="form-control" name="admin_email" value="<?php echo $row['admin_email']; ?>" required>
         </div>
         <div class="mb-3">
             <label class="form-label">Password</label>
-            <input type="text" class="form-control" name="admin_password" value="<?php echo $row['admin_password']; ?>"
-                required>
+            <input type="text" class="form-control" name="admin_password" value="<?php echo $row['admin_password']; ?>" required>
         </div>
 
         <button type="submit" name="update" class="btn btn-primary">Update</button>

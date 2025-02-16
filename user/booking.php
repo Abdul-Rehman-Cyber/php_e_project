@@ -16,6 +16,7 @@ $theaterResult = mysqli_query($connect, $theaterQuery);
 $movieQuery = "SELECT movie_id, title FROM movies where movie_status = 'Released'";
 $movieResult = mysqli_query($connect, $movieQuery);
 
+$userName = isset($_SESSION['user_session']['user_name']) ? $_SESSION['user_session']['user_name'] : '';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -80,6 +81,7 @@ $movieResult = mysqli_query($connect, $movieQuery);
 							</a>
 
 							<div class="sign__group">
+							<input type="text" class="form-control sign__input" name="username" value="<?php echo htmlspecialchars($userName); ?>" readonly>
 								<select name="theater_id" id="theater_id" class="form-control sign__input" required>
 									<option value="">Choose Theater</option>
 									<?php while ($row = mysqli_fetch_assoc($theaterResult)) { ?>
@@ -88,7 +90,11 @@ $movieResult = mysqli_query($connect, $movieQuery);
 										</option>
 									<?php } ?>
 								</select>
-								<select name="movie_id" id="movie_id" class="form-control sign__input" required>
+								
+							</div>
+
+							<div class="sign__group">
+							<select name="movie_id" id="movie_id" class="form-control sign__input" required>
 									<option value="">Choose Movie</option>
 									<?php while ($row = mysqli_fetch_assoc($movieResult)) { ?>
 										<option value="<?php echo $row['movie_id']; ?>">
@@ -96,12 +102,12 @@ $movieResult = mysqli_query($connect, $movieQuery);
 										</option>
 									<?php } ?>
 								</select>
+
+								<input type="date" name="show_date" id="show_date" class="form-control sign__input" required>
 							</div>
 
 							<div class="sign__group">
-								<input type="date" name="show_date" id="show_date" class="form-control sign__input"
-									required>
-								<select name="show_time" id="show_time" class="form-control sign__input" required>
+							<select name="show_time" id="show_time" class="form-control sign__input" required>
 									<option value="">Select a show time</option>
 									<option value="10:00 AM">10:00 AM</option>
 									<option value="1:00 PM">1:00 PM</option>
@@ -109,9 +115,7 @@ $movieResult = mysqli_query($connect, $movieQuery);
 									<option value="7:00 PM">7:00 PM</option>
 									<option value="10:00 PM">10:00 PM</option>
 								</select>
-							</div>
 
-							<div class="sign__group">
 								<select name="seating_category" id="seating_category" class="form-control sign__input"
 									required>
 									<option value="">Select a category</option>
@@ -128,7 +132,7 @@ $movieResult = mysqli_query($connect, $movieQuery);
 							<div class="sign__group">
 								<input type="text"  class="sign__input" value="Number of Kid Tickets (Ages 3-12):" disabled>
 								<input type="number" name="kid_tickets" id="kid_tickets"
-									class="form-control sign__input" min="0" required>
+									class="form-control sign__input" min="0" >
 							</div>
 
 							<button class="sign__btn" type="submit" name="sign_up_btn">Book Tickets</button>
