@@ -2,6 +2,14 @@
 session_start();
 include("../admin/connection.php");
 
+if (!isset($_SESSION['admin_session'])) {
+
+    echo
+        "<script>
+    window.location.href='signin.php';
+
+    </script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,9 +103,9 @@ include("../admin/connection.php");
                                                     <td>$row[age_rating]</td>
                                                     <td>$row[movie_status]</td>
                                                     <td>
-                                                    <a class='btn btn-light' href='view_movie.php?id=$row[movie_id]'>view details </a>
-                                                    <a class='btn btn-light' href='update_movie.php?id=$row[movie_id]'>Update </a>
-                                                    <a class='btn btn-danger' href='delete_movie.php?id=$row[movie_id]'>delete </a>
+                                                    <a class='btn btn-outline-primary' href='view_movie.php?id=$row[movie_id]'>view details </a>
+                                                    <a class='btn btn-outline-primary' href='update_movie.php?id=$row[movie_id]'>Update </a>
+                                                    <a class='btn btn-primary' href='delete_movie.php?id=$row[movie_id]'>delete </a>
                                                     </td>
                                                 </tr>";
                                         }

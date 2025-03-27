@@ -2,10 +2,14 @@
 session_start();
 include('../admin/connection.php');
 
-// if (!isset($_SESSION['admin_session'])) {
-//     echo "<script>window.location.href='login.php';</script>";
-//     exit();
-// }
+if (!isset($_SESSION['admin_session'])) {
+
+    echo
+        "<script>
+    window.location.href='signin.php';
+
+    </script>";
+}
 
 // Validate theater_id from URL
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {

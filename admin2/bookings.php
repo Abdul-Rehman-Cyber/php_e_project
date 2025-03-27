@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../admin/connection.php');
+include("../admin/connection.php");
 
 if (!isset($_SESSION['admin_session'])) {
 
@@ -10,17 +10,6 @@ if (!isset($_SESSION['admin_session'])) {
 
     </script>";
 }
-
-$query = "select * from admin where id=$_GET[id]";
-$result = mysqli_query($connect, $query);
-
-
-if (!$result || mysqli_num_rows($result) == 0) {
-    echo "<script>alert('Admin not found.'); window.location.href='admin.php';</script>";
-    exit();
-}
-
-$row = mysqli_fetch_assoc($result);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,86 +71,56 @@ $row = mysqli_fetch_assoc($result);
             <!-- tabel start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-12 col-xl-12">
+                    <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Update Theater Details</h6>
-                            <form method="POST" enctype="multipart/form-data">
+                            <div class="d-flex justify-content-between"> 
+                                <h5>Bookings</h5> 
+                            </div>
+                           
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">User id</th>
+                                            <th scope="col">Theater id</th>
+                                            <th scope="col">Movie id</th>
+                                            <th scope="col">Show date time</th>
+                                            <th scope="col">Seating</th>
+                                            <th scope="col">Total ticket</th> 
+                                            <th scope="col">Total cost</th>                                   
+                                            <th scope="col">Booked at</th>                                   
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $query = "select * from bookings";
+                                        $result = mysqli_query($connect, $query);
+                                        foreach ($result as $row) {
 
-                                <!-- movie poster input -->
-                                <div class="row mb-3">
-                                    <label for="admin_name" class="col-sm-2 col-form-label">Admin_Name</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="admin_name" name="admin_name"  value="<?php echo $row['admin_name']; ?>" required>
-                                    </div>
-                                </div>
-                                <!-- movie poster input -->
+                                            $total_tickets = $row['adult_tickets'] + $row['kid_tickets'];
 
-                                <!-- movie title input -->
-                                <div class="row mb-3">
-                                    <label for="admin_email" class="col-sm-2 col-form-label">Admin_Email</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="admin_email" name="admin_email" value="<?php echo $row['admin_email']; ?>" required>
-                                    </div>
-                                </div>
-                                <!-- movie title input -->
-                                
-
-                                <!-- movie title input -->
-                                <div class="row mb-3">
-                                    <label for="admin_password" class="col-sm-2 col-form-label">Admin_Password</label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="admin_password" name="admin_password" value="<?php echo $row['admin_password']; ?>" required>
-                                    </div>
-                                </div>
-                                <!-- movie title input -->
-        
-
-                                <!-- movie Update button -->
-                                <div class="row mb-3">
-                                    <label for="release_date" class="col-sm-2 col-form-label">Update Button</label>
-                                    <div class="col-sm-10">
-                                        <button type="submit" name="update" class="btn btn-outline-primary w-100 mb-3">Update</button>
-                                    </div>
-                                </div>
-                                <!-- movie Update button -->
-
-                            </form>
-                            <?php
-if (isset($_POST['update'])) {
-
-    $admin_name = $_POST['admin_name'];
-    $admin_email = $_POST['admin_email'];
-    $admin_password = $_POST['admin_password'];
-
-    $update_query = "UPDATE admin SET admin_name = '$admin_name', admin_email = '$admin_email', admin_password = '$admin_password' WHERE id = $_GET[id]";
-    
-    $result = mysqli_query($connect, $update_query); 
-
-
-    if ($result) {
-        echo "<script>
-        
-        alert('Update details Successfully');
-        window.location.href='admin.php';
-        </script>";
-    } else {
-        echo "<script>
-        alert('Failed to update details');
-        console.log('" . mysqli_error($connect) . "');
-        </script>";
-    }
-
-}
-?>
-
+                                            echo "<tr>
+                                                <td>{$row['booking_id']}</td>
+                                                <td>{$row['user_id']}</td>
+                                                <td>{$row['theater_id']}</td>
+                                                <td>{$row['movie_id']}</td>
+                                                <td>{$row['show_date']} {$row['show_time']}</td>
+                                                <td>{$row['seating_category']}</td>
+                                                <td>{$total_tickets}</td>
+                                                <td>{$row['total_cost']}</td>
+                                                <td>{$row['booking_time']}</td>
+                                            </tr>";
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- tabel start -->
-
-
-            <!-- Blank End -->
 
 
             <!-- Footer Start -->

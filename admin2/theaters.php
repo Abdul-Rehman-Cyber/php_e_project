@@ -2,6 +2,15 @@
 session_start();
 include("../admin/connection.php");
 
+if (!isset($_SESSION['admin_session'])) {
+
+    echo
+        "<script>
+    window.location.href='signin.php';
+
+    </script>";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,7 +104,7 @@ include("../admin/connection.php");
                                                 <td>
                                                     <a class='btn btn-outline-primary' href='view_theater.php?id=$row[theater_id]'>view details </a>
                                                     <a class='btn btn-outline-primary' href='update_theater.php?id=$row[theater_id]'>Update </a>
-                                                    <a class='btn btn-outline-primary' href='delete_theater.php?id=$row[theater_id]'>delete </a>";
+                                                    <a class='btn btn-primary' href='delete_theater.php?id=$row[theater_id]'>delete </a>";
                                                 "</td>
                                             </tr>";
                                     }

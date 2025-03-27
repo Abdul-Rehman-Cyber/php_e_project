@@ -1,3 +1,16 @@
+<?php
+session_start();
+include("../admin/connection.php");
+
+if (!isset($_SESSION['admin_session'])) {
+
+    echo
+        "<script>
+    window.location.href='signin.php';
+
+    </script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,8 +74,13 @@
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-line fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Movies</p>
+                                <?php 
+                                $movies = "select * from movies";
+                                $result = mysqli_query($connect, $movies);
+                                $movie_count = mysqli_num_rows($result);
+                                ?>
+                                <h6 class="mb-0"><?php echo $movie_count;?></h6>
                             </div>
                         </div>
                     </div>
@@ -70,8 +88,13 @@
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-bar fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Theaters</p>
+                                <?php
+                                $theaters = "select * from theaters";
+                                $result = mysqli_query($connect, $theaters);
+                                $theaters_count = mysqli_num_rows($result);
+                                ?>
+                                <h6 class="mb-0"><?php echo $theaters_count;?></h6>
                             </div>
                         </div>
                     </div>
@@ -79,8 +102,13 @@
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-area fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <p class="mb-2">Users</p>
+                                <?php
+                                $users = "select * from user_table";
+                                $result = mysqli_query($connect, $users);
+                                $users_count = mysqli_num_rows($result);
+                                ?>
+                                <h6 class="mb-0"><?php echo $users_count;?></h6>
                             </div>
                         </div>
                     </div>
@@ -88,8 +116,13 @@
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
                             <i class="fa fa-chart-pie fa-3x text-primary"></i>
                             <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0">$1234</h6>
+                                <?php 
+                                $bookings = "select * from bookings";
+                                $result = mysqli_query($connect, $bookings);
+                                $bookings_count = mysqli_num_rows($result);
+                                ?>
+                                <p class="mb-2">Bookings</p>
+                                <h6 class="mb-0"><?php echo $bookings_count;?></h6>
                             </div>
                         </div>
                     </div>
@@ -102,74 +135,42 @@
             <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary text-center rounded p-4">
                     <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Recent Salse</h6>
-                        <a href="">Show All</a>
+                        <h6 class="mb-0">Recent Movies</h6>
+                        <a href="movies.php">Show All</a>
                     </div>
                     <div class="table-responsive">
                         <table class="table text-start align-middle table-bordered table-hover mb-0">
                             <thead>
                                 <tr class="text-white">
-                                    <th scope="col"><input class="form-check-input" type="checkbox"></th>
-                                    <th scope="col">Date</th>
-                                    <th scope="col">Invoice</th>
-                                    <th scope="col">Customer</th>
-                                    <th scope="col">Amount</th>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">release_date</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                // $query = "select * from bookings";
-                                // $result = mysqli_query($connect,$query);
-                                // $row = mysqli_fetch_assoc($result)
+                            <?php
+                            $query = "SELECT * FROM movies ORDER BY created_at DESC LIMIT 5;";
+                            $result = mysqli_query($connect, $query);
 
-                                ?>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
-                                <tr>
-                                    <td><input class="form-check-input" type="checkbox"></td>
-                                    <td>01 Jan 2045</td>
-                                    <td>INV-0123</td>
-                                    <td>Jhon Doe</td>
-                                    <td>$123</td>
-                                    <td>Paid</td>
-                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                </tr>
+                            if ($result) {
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "
+                                    <tr>
+                                        <td>{$row['movie_id']}</td>
+                                        <td>{$row['title']}</td>
+                                        <td>{$row['release_date']}</td>
+                                        <td>{$row['movie_status']}</td>
+                                        <td><a class='btn btn-sm btn-primary' href='view_movie.php?id={$row['movie_id']}'>Detail</a></td>
+                                    </tr>
+                                    ";
+                                }
+                            } else {
+                                echo "Error: " . mysqli_error($connect);
+                            }
+                            ?>
+
                             </tbody>
                         </table>
                     </div>

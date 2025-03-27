@@ -247,38 +247,31 @@ input[type="range"]::-moz-range-thumb {
 								<div class="col-12">
 									<div class="reviews">
 										<ul class="reviews__list">
-											<li class="reviews__item">
-												<div class="reviews__autor">
-													<img class="reviews__avatar" src="img/user.png" alt="">
-													<span class="reviews__name">Best Marvel movie in my opinion</span>
-													<span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
-
-													<span class="reviews__rating"><i class="icon ion-ios-star"></i>8.4</span>
-												</div>
-												<p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-											</li>
-
-											<li class="reviews__item">
-												<div class="reviews__autor">
-													<img class="reviews__avatar" src="img/user.png" alt="">
-													<span class="reviews__name">Best Marvel movie in my opinion</span>
-													<span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
-
-													<span class="reviews__rating"><i class="icon ion-ios-star"></i>9.0</span>
-												</div>
-												<p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-											</li>
-
-											<li class="reviews__item">
-												<div class="reviews__autor">
-													<img class="reviews__avatar" src="img/user.png" alt="">
-													<span class="reviews__name">Best Marvel movie in my opinion</span>
-													<span class="reviews__time">24.08.2018, 17:53 by John Doe</span>
-
-													<span class="reviews__rating"><i class="icon ion-ios-star"></i>7.5</span>
-												</div>
-												<p class="reviews__text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-											</li>
+											
+										<?php
+										$query = "SELECT reviews.*, user_table.user_name 
+										FROM reviews 
+										INNER JOIN user_table ON reviews.user_id = user_table.user_id 
+										WHERE reviews.movie_id = " . intval($_GET['id']);
+							  
+										$result = mysqli_query($connect, $query);
+										
+										if ($result) {
+											while ($row = mysqli_fetch_assoc( $result )) {
+												echo "
+												<li class='reviews__item'>
+													<div class='reviews__autor'>
+														<img class='reviews__avatar' src='img/home/10477531-removebg-preview.png' alt='avatar'>
+														<span class='reviews__name'>$row[title]</span>
+														<span class='reviews__time'>$row[review_timestamp] by $row[user_name]</span>
+														<span class='reviews__rating'><i class='icon ion-ios-star'></i>$row[rating]</span>
+													</div>
+													<p class='reviews__text'>$row[review]</p>
+												</li>";
+											}
+										}
+										?>
+										
 										</ul>
 
 										<form method="POST" class="form">

@@ -2,14 +2,14 @@
 session_start();
 include("../admin/connection.php");
 
-// if (!isset($_SESSION['admin_session'])) {
+if (!isset($_SESSION['admin_session'])) {
 
-//     echo
-//         "<script>
-//     window.location.href='login.php';
+    echo
+        "<script>
+    window.location.href='signin.php';
 
-//     </script>";
-// }
+    </script>";
+}
 
 $query = "select * from movies where movie_id=$_GET[id]";
 $result = mysqli_query($connect, $query);

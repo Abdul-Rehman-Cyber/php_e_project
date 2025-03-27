@@ -45,11 +45,7 @@
 
 								<ul class="dropdown-menu header__dropdown-menu" aria-labelledby="dropdownMenuMore">
 									<li><a href="about.php">About</a></li>
-									<li>
-										<a href="<?php echo isset($_SESSION['user_session']) ? 'profile.php' : 'signin.php'; ?>">Profile</a>
-									</li>
-
-
+									<li><a href="sitemap.php">Sitemap</a></li>
 								</ul>
 							</li>
 							<!-- end dropdown -->

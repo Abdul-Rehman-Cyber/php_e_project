@@ -2,6 +2,14 @@
 session_start();
 include("../admin/connection.php");
 
+if (!isset($_SESSION['admin_session'])) {
+
+    echo
+        "<script>
+    window.location.href='signin.php';
+
+    </script>";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
